@@ -12,9 +12,9 @@ export class AppComponent {
 
 
   constructor(){
-    this.message = new Message('', 'assets/images/user.png');
+    this.message = new Message('', 'user', 'assets/images/user.png');
     this.messages = [
-      new Message('Welkom, stel een vraag', 'assets/images/bot.png', new Date())
+      new Message('Welkom, stel een vraag', 'bot', 'assets/images/bot.png', new Date())
     ];
   }
 }

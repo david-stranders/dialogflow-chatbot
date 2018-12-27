@@ -1,9 +1,10 @@
-<li class="list-group-item">
+<div class="message" [ngClass]="{ 'from': message.sentBy === 'bot',
+                                    'to':   message.sentBy === 'user' }">
   <img [src]="message.avatar" class="avatar"/>
-  <div class="message">
+  <span>
     {{message.content}}
-  </div>
-  <div class="timeform">
+  </span>
+  <span class="timeform">
     <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="timestamp">{{message.timestamp | date : 'HH:mm:ss' }}</span>
-  </div>
-</li>
+  </span>
+</div>
