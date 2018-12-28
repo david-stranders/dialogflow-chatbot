@@ -1,10 +1,15 @@
-<div class="message" [ngClass]="{ 'from': message.sentBy === 'bot',
-                                    'to':   message.sentBy === 'user' }">
-  <img [src]="message.avatar" class="avatar"/>
-  <span>
-    {{message.content}}
-  </span>
-  <span class="timeform">
-    <i class="fa fa-clock-o" aria-hidden="true"></i> <span class="timestamp">{{message.timestamp | date : 'HH:mm:ss' }}</span>
-  </span>
+<div class="message" [ngClass]="{ 'from': message.sentBy === 'bot', 'to':   message.sentBy === 'user' }">
+  <tr *ngIf="message.sentBy === 'bot'">
+    <td class="avatar-box">
+    <img [src]="message.avatar" class="avatar"/>
+    <span>{{message.timestamp | date : 'HH:mm:ss' }}</span>
+    </td>
+    <td class="text-box">{{message.content}}</td>
+  </tr>
+  <tr *ngIf="message.sentBy === 'user'">
+    <td class="text-box">{{message.content}}</td>
+    <td class="avatar-box">
+      <img [src]="message.avatar" class="avatar"/>
+      <span>{{message.timestamp | date : 'HH:mm:ss' }}</span>
+    </td>
 </div>

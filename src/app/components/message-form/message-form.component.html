@@ -1,4 +1,3 @@
-<div class="chatcontrol">
-  <input type="text" class="form-control chatinput" (keyup.enter)="sendMessage()" [(ngModel)]="message.content" >
-  <button class="btn btn-success sendbtn" (click)="sendMessage()">Send</button>
+<div>
+  <input type="text" class="chatinput" (keyup.enter)="sendMessage()" [(ngModel)]="message.content" placeholder="Type je vraag en druk op enter">
 </div>

@@ -23,20 +23,20 @@
   margin-top: -10px;
 }
 
-.timeform {
-  float: left;
-  width: 100%;
-
-  i {
-    margin-left: 20px;
-  }
-
-  .timestamp{
-    font-size: 0.6em;
-  }
-}
 
 .avatar{
   width: 50px;
-  margin-right: 20px;
+}
+
+.avatar-box {
+  width: 20%;
+  text-align: center;
+  font-size: 10px;
+  font-weight: normal;
+}
+
+.text-box {
+  width: 80%;
+  padding: 10px;
+  font-size: 18px;
 }
