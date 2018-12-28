@@ -1,5 +1,5 @@
-<div class="chatlist" #chatlist>
-  <div class="chat-list-container">
+<div class="chat-list" #chatlist (window:resize)="setHeight($event)">
+  <div class="chat-list-container" #chatlist [ngStyle]="{'height': getHeigth() + 'px'}">
     <message-item *ngFor="let msg of messages" [message]="msg"></message-item>
   </div>
 </div>

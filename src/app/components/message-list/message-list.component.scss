@@ -1,12 +1,10 @@
-.chatlist{
-  height: 600px;
+.chat-list{
   overflow-y: scroll;
 }
 
 .chat-list-container {
   margin-top: 20px;
-  width: 55%;
-  max-width: 600px;
-  min-width: 300px;
+  max-width: 550px;
+  min-width: 250px;
   margin: auto;
 }

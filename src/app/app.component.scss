@@ -1,7 +1,9 @@
 .chatform{
-  //width: 55%;
-  //max-width: 600px;
-  //min-width: 300px;
-  margin: auto;
-  //margin-top: 50px;
+ //height: 100%;
+}
+
+.stick-to-bottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
 }

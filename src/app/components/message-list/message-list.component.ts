@@ -11,6 +11,7 @@ export class MessageListComponent implements AfterViewInit{
 
   @Input('messages')
   messages : Message[];
+  viewportHeight: number;
 
   @ViewChild('chatlist', { read: ElementRef }) chatList: ElementRef;
   @ViewChildren(MessageItemComponent, { read: ElementRef }) chatItems: QueryList<MessageItemComponent>;
@@ -30,6 +31,15 @@ export class MessageListComponent implements AfterViewInit{
     catch (err) {
       console.log('Could not find the "chatList" element.');
     }
+  }
+
+  getHeigth(): number{
+    this.viewportHeight = window.innerHeight;
+    return (this.viewportHeight - 80);
+  }
+
+  setHeight(event) {
+    this.viewportHeight = event.target.innerHeight;
   }
 
 }
