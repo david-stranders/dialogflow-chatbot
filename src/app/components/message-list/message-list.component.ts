@@ -35,7 +35,7 @@ export class MessageListComponent implements AfterViewInit{
 
   getHeigth(): number{
     this.viewportHeight = window.innerHeight;
-    return (this.viewportHeight - 72);
+    return (this.viewportHeight - 82);
   }
 
   setHeight(event) {
