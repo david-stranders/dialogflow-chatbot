@@ -1,3 +1,5 @@
 <div class="inputpanel">
-  <input type="text" class="chatinput" (keyup.enter)="sendMessage()" [(ngModel)]="message.content" placeholder="Type je vraag en druk op enter">
+  <input type="text" class="chatinput" (keyup.enter)="sendMessage()" [(ngModel)]="message" placeholder="Type je vraag en druk op enter">
+  <button *ngIf="speechService.SupportRecognition"
+          (click)="toggleListening()">mic</button>
 </div>

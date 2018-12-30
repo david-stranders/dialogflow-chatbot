@@ -7,12 +7,10 @@ import {Message} from "./model/message";
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  public message : Message;
   public messages : Message[];
 
 
   constructor(){
-    this.message = new Message('', 'user', 'assets/images/user.png');
     this.messages = [
       new Message('Welkom, stel een vraag', 'bot', 'assets/images/bot.png', new Date())
     ];
