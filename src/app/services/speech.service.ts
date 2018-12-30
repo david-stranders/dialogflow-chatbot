@@ -86,7 +86,6 @@ export class SpeechService {
   private handleResultevent(event: any): void {
     const result = event.results[0][0];
     this._lastResult = { confidence: result.confidence, transcript: result.transcript };
-    console.log('resultaat: ' + this._lastResult.transcript);
     this.zone.run(() => {
       this.resultEmitter.emit(this._lastResult);
     })
@@ -94,9 +93,9 @@ export class SpeechService {
 
   private handleEndEvent(event: any): void {
     this._isListening = false;
-    if (!this._lastResult) {
+    this.zone.run(() => {
       this.resultEmitter.emit(null);
-    }
+    });
     this._lastResult = null;
   }
 

@@ -1,4 +1,4 @@
-import {Component, OnInit, Input, ChangeDetectorRef, AfterViewChecked} from '@angular/core';
+import {Component, OnInit, Input, AfterViewInit} from '@angular/core';
 import {DialogflowService} from "../../services/dialogflow.service";
 import {Message} from "../../model/message";
 import {SpeechService} from "../../services/speech.service";
@@ -9,12 +9,15 @@ import {SpeechService} from "../../services/speech.service";
   templateUrl: './message-form.component.html',
   styleUrls: ['./message-form.component.scss']
 })
-export class MessageFormComponent implements OnInit {
+export class MessageFormComponent implements OnInit, AfterViewInit {
 
   message = '';
 
   @Input('messages')
   messages : Message[];
+  viewportWidth: number;
+  micColor = '';
+  listening = false;
 
   constructor(readonly dialogFlowService: DialogflowService,
               readonly speechService: SpeechService) {
@@ -22,9 +25,15 @@ export class MessageFormComponent implements OnInit {
 
   ngOnInit() {
     this.speechService.resultEmitter.subscribe( speechResult => {
+      this.micColor = '';
+      this.listening = false;
       if (speechResult && speechResult.transcript && speechResult.transcript.length > 0) {
        this.sendMessage(speechResult.transcript);
     }});
+  }
+
+  ngAfterViewInit() {
+    this.viewportWidth = window.innerWidth;
   }
 
   public sendMessage(spokenResult?: string): void {
@@ -42,11 +51,32 @@ export class MessageFormComponent implements OnInit {
   }
 
   public toggleListening(): void {
-    if (this.speechService.IsListening) {
-      this.speechService.stopListening();
-    } else {
-      this.speechService.requestListening();
+    if (!this.listening) {
+      this.listening = true;
+      this.micColor = 'lightcoral';
+      if (this.speechService.IsListening) {
+        this.speechService.stopListening();
+      } else {
+        this.speechService.requestListening();
+      }
     }
+  }
+
+  getLeft(): number {
+    if(this.viewportWidth >  552) {
+      return (this.viewportWidth / 2 + 224);
+    }
+    else {
+      return (this.viewportWidth - 40 - (0.02 * this.viewportWidth));
+    }
+  }
+
+  setWidth() {
+    this.viewportWidth = window.innerWidth;
+  }
+
+  getColor(): string{
+    return this.micColor;
   }
 
 }

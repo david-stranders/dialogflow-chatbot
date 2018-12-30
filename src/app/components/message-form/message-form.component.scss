@@ -1,7 +1,7 @@
 .chatinput{
   width: 100%;
-  max-width: 500px;
-  min-width: 250px;
+  max-width: 470px;
+  min-width: 230px;
   height: 40px;
   border-radius: 25px;
   border: 1px #2095FE;
@@ -12,7 +12,7 @@
 
 input{
   padding-left: 15px;
-  padding-right: 15px;
+  padding-right: 47px;
 }
 
 input:focus {
@@ -26,5 +26,22 @@ input:focus {
   padding-right: 2%;
   padding-top: 15px;
   padding-bottom: 15px;
+}
+
+
+button{
+  position:absolute;
+  top: 15px;
+  border:none;
+  height:42px;
+  width:42px;
+  border-radius:100%;
+  outline:none;
+  text-align:center;
+  font-weight:bold;
+}
+
+button:hover{
+  cursor:pointer;
 }
 
