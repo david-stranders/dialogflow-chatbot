@@ -10,7 +10,7 @@ import {Message} from "../../model/message";
 export class MessageItemComponent implements OnInit {
 
   @Input('message')
-  message: Message;
+  message: Message = new Message('', '', '', new Date());
 
   constructor() { }
 

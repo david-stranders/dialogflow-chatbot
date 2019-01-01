@@ -1,11 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { DialogflowService } from './dialogflow.service';
+import {HttpClientTestingModule} from "@angular/common/http/testing";
 
 describe('DialogflowService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [DialogflowService]
+      providers: [DialogflowService],
+      imports: [
+        HttpClientTestingModule
+      ]
     });
   });
 

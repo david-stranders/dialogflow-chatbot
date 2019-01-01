@@ -15,7 +15,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
 
   @Input('messages')
   messages : Message[];
-  viewportWidth: number;
+  viewportWidth: number = window.innerWidth;
   micColor = '';
   listening = false;
 
