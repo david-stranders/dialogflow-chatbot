@@ -26,6 +26,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.speechService.resultEmitter.subscribe( speechResult => {
       this.micColor = '';
+      this.playSound();
       this.listening = false;
       if (speechResult && speechResult.transcript && speechResult.transcript.length > 0) {
        this.sendMessage(speechResult.transcript);
@@ -43,6 +44,9 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
     this.messages.push(new Message(this.message, 'user', 'assets/images/user.png', new Date()));
 
     this.dialogFlowService.getResponse(this.message).subscribe(res => {
+      if (res.result && res.result.fulfillment && res.result.fulfillment && res.result.fulfillment.speech.length === 0 ) {
+        res.result.fulfillment.speech = 'Sorry, ik begrijp je niet';
+      }
       this.messages.push(
         new Message(res.result.fulfillment.speech, 'bot', 'assets/images/bot.png', res.timestamp)
       );
@@ -52,6 +56,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
 
   public toggleListening(): void {
     if (!this.listening) {
+      this.playSound();
       this.listening = true;
       this.micColor = 'lightcoral';
       if (this.speechService.IsListening) {
@@ -60,6 +65,18 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
         this.speechService.requestListening();
       }
     }
+  }
+
+  playSound() {
+    const audio = new Audio();
+    if (!this.listening) {
+      audio.src = "assets/sounds/start-recording.wav";
+    } else {
+      audio.src = "assets/sounds/end-recording.wav";
+    }
+    audio.volume = 0.5;
+    audio.load();
+    audio.play();
   }
 
   getLeft(): number {
