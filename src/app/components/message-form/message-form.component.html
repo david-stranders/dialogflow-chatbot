@@ -1,6 +1,6 @@
 <div class="inputpanel" (window:resize)="setWidth()">
   <input type="text" class="chatinput" (keyup.enter)="sendMessage()" [(ngModel)]="message" placeholder="Type je vraag en druk op enter">
-  <button *ngIf="speechService.SupportRecognition"
+  <button *ngIf="speechService.supportRecognition"
           [ngStyle]="{'left': '' + getLeft() + 'px', 'background' : getColor()}"
           (click)="toggleListening()"><img src="assets/images/mic2.png"></button>
 </div>

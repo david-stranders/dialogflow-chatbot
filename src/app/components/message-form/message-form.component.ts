@@ -50,6 +50,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
       this.messages.push(
         new Message(res.result.fulfillment.speech, 'bot', 'assets/images/bot.png', res.timestamp)
       );
+      this.playReplyMessage(res.result.fulfillment.speech);
     });
     this.message = '';
   }
@@ -65,6 +66,10 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
         this.speechService.requestListening();
       }
     }
+  }
+
+  playReplyMessage(message: string) {
+    this.speechService.requestSpeak(message);
   }
 
   playSound() {
