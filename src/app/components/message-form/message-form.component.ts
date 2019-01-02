@@ -45,7 +45,8 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
 
     this.dialogFlowService.getResponse(this.message).subscribe(res => {
       if (res.result && res.result.fulfillment && res.result.fulfillment && res.result.fulfillment.speech.length === 0 ) {
-        res.result.fulfillment.speech = 'Sorry, ik begrijp je niet';
+        res.result.fulfillment.speech = 'Voor deze vraag hebben mijn programmeurs nog geen antwoord gedefinieerd. (' +
+        res.result.action + ')';
       }
       this.messages.push(
         new Message(res.result.fulfillment.speech, 'bot', 'assets/images/bot.png', res.timestamp)
@@ -73,23 +74,34 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
   }
 
   playSound() {
-    const audio = new Audio();
-    if (!this.listening) {
-      audio.src = "assets/sounds/start-recording.wav";
-    } else {
-      audio.src = "assets/sounds/end-recording.wav";
+    // checking for mobile device, those use native sounds on starting and stopping recording with the device's microphone
+    if ((typeof window.orientation == "undefined") || (navigator.userAgent.indexOf('IEMobile') == -1)) {
+      const audio = new Audio();
+      if (!this.listening) {
+        audio.src = "assets/sounds/start-recording.wav";
+      } else {
+        audio.src = "assets/sounds/end-recording.wav";
+      }
+      audio.volume = 0.5;
+      audio.load();
+      audio.play();
     }
-    audio.volume = 0.5;
-    audio.load();
-    audio.play();
+  }
+
+  getPlaceholder(){
+    if (this.speechService.supportRecognition) {
+      return 'Stel je vraag of type hem in'
+    } else {
+      return 'Type je vraag en druk enter'
+    }
   }
 
   getLeft(): number {
-    if(this.viewportWidth >  552) {
-      return (this.viewportWidth / 2 + 224);
+    if(window.innerWidth >  552) {
+      return (window.innerWidth / 2 + 224);
     }
     else {
-      return (this.viewportWidth - 40 - (0.02 * this.viewportWidth));
+      return (window.innerWidth - 40 - (0.02 * window.innerWidth));
     }
   }
 
