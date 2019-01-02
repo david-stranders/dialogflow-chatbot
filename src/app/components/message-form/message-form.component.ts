@@ -9,7 +9,7 @@ import {SpeechService} from "../../services/speech.service";
   templateUrl: './message-form.component.html',
   styleUrls: ['./message-form.component.scss']
 })
-export class MessageFormComponent implements OnInit {
+export class MessageFormComponent implements OnInit, AfterViewInit {
 
   message = '';
 
@@ -17,6 +17,7 @@ export class MessageFormComponent implements OnInit {
   messages : Message[];
   micColor = '';
   listening = false;
+  leftPosition: number;
 
   constructor(readonly dialogFlowService: DialogflowService,
               readonly speechService: SpeechService) {
@@ -30,6 +31,10 @@ export class MessageFormComponent implements OnInit {
       if (speechResult && speechResult.transcript && speechResult.transcript.length > 0) {
        this.sendMessage(speechResult.transcript);
     }});
+  }
+
+  ngAfterViewInit() {
+    this.setLeft();
   }
 
   public sendMessage(spokenResult?: string): void {
@@ -95,17 +100,19 @@ export class MessageFormComponent implements OnInit {
     }
   }
 
-  getLeft(): string {
-    if(window.innerWidth >  552) {
-      return ((window.innerWidth / 2 + 224) + 'px');
-    }
-    else {
-      return 'calc(98% - 42px)';
-    }
+  setLeft() {
+    this.leftPosition = 0;
+    setTimeout(()=> {
+      if(window.innerWidth >  552) {
+        this.leftPosition =  (window.innerWidth / 2 + 224);
+      }
+      else {
+        this.leftPosition = ((window.innerWidth - 40 - (0.02 * window.innerWidth)))
+      }
+    }, 0)
   }
 
   getColor(): string{
     return this.micColor;
   }
-
 }
