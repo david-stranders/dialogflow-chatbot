@@ -75,7 +75,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
 
   playSound() {
     // checking for mobile device, those use native sounds on starting and stopping recording with the device's microphone
-    if ((typeof window.orientation == "undefined") || (navigator.userAgent.indexOf('IEMobile') == -1)) {
+    if (!this.isMobileDevide()) {
       const audio = new Audio();
       if (!this.listening) {
         audio.src = "assets/sounds/start-recording.wav";
@@ -86,6 +86,10 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
       audio.load();
       audio.play();
     }
+  }
+
+  isMobileDevide(){
+    return (typeof window.orientation !== "undefined") || (navigator.userAgent.indexOf('IEMobile') !== -1)
   }
 
   getPlaceholder(){
