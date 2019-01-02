@@ -1,6 +1,6 @@
 <div class="inputpanel">
-  <input type="text" class="chatinput" (keyup.enter)="sendMessage()" [(ngModel)]="message" placeholder="{{isMobileDevide()}}">
+  <input type="text" class="chatinput" (keyup.enter)="sendMessage()" [(ngModel)]="message" placeholder="{{getPlaceholder()}}">
   <button *ngIf="speechService.supportRecognition"
-          [ngStyle]="{'left': '' + getLeft() + 'px', 'background' : getColor()}"
+          [ngStyle]="{'left': '' + getLeft(), 'background' : getColor()}"
           (click)="toggleListening()"><img src="assets/images/mic2.png"></button>
 </div>

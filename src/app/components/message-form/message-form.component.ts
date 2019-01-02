@@ -9,13 +9,12 @@ import {SpeechService} from "../../services/speech.service";
   templateUrl: './message-form.component.html',
   styleUrls: ['./message-form.component.scss']
 })
-export class MessageFormComponent implements OnInit, AfterViewInit {
+export class MessageFormComponent implements OnInit {
 
   message = '';
 
   @Input('messages')
   messages : Message[];
-  viewportWidth: number = window.innerWidth;
   micColor = '';
   listening = false;
 
@@ -31,10 +30,6 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
       if (speechResult && speechResult.transcript && speechResult.transcript.length > 0) {
        this.sendMessage(speechResult.transcript);
     }});
-  }
-
-  ngAfterViewInit() {
-    this.viewportWidth = window.innerWidth;
   }
 
   public sendMessage(spokenResult?: string): void {
@@ -100,17 +95,13 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
     }
   }
 
-  getLeft(): number {
+  getLeft(): string {
     if(window.innerWidth >  552) {
-      return (window.innerWidth / 2 + 224);
+      return ((window.innerWidth / 2 + 224) + 'px');
     }
     else {
-      return (window.innerWidth - 40 - (0.02 * window.innerWidth));
+      return 'calc(98% - 42px)';
     }
-  }
-
-  setWidth() {
-    this.viewportWidth = window.innerWidth;
   }
 
   getColor(): string{
