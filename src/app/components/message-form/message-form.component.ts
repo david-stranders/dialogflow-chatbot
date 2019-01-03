@@ -45,7 +45,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
 
     this.dialogFlowService.getResponse(this.message).subscribe(res => {
       if (res.result && res.result.fulfillment && res.result.fulfillment && res.result.fulfillment.speech.length === 0 ) {
-        res.result.fulfillment.speech = 'Voor deze vraag hebben mijn programmeurs nog geen antwoord gedefinieerd. (' +
+        res.result.fulfillment.speech = 'Voor deze input hebben mijn programmeurs nog geen reactie gedefinieerd. (' +
         res.result.action + ')';
       }
       this.messages.push(
