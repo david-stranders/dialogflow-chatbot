@@ -52,7 +52,9 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
       );
       this.playReplyMessage(res.result.fulfillment.speech);
       if(res.result.fulfillment.speech === 'Oei, het lukt me nu niet om de agenda te openen. Ik probeer het nog een keer, een ogenblik nog') {
+        console.log('test');
         setTimeout(()=> {
+          console.log(this.message);
           this.sendMessage();
         }, 5000)
       }
