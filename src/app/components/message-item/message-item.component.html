@@ -4,7 +4,7 @@
     <img [src]="message.avatar" class="avatar"/>
     <span>{{message.timestamp | date : 'HH:mm:ss' }}</span>
     </td>
-    <td class="text-box">{{message.content}}</td>
+    <td class="text-box"> <span [innerHTML]="message.content"></span></td>
   </tr>
   <tr *ngIf="message.sentBy === 'user'">
     <td class="text-box">{{message.content}}</td>
@@ -12,4 +12,5 @@
       <img [src]="message.avatar" class="avatar"/>
       <span>{{message.timestamp | date : 'HH:mm:ss' }}</span>
     </td>
+  </tr>
 </div>

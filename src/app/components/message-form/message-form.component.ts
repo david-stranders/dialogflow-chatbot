@@ -44,11 +44,14 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
     this.messages.push(new Message(this.message, 'user', 'assets/images/user.png', new Date()));
 
     this.dialogFlowService.getResponse(this.message).subscribe(res => {
-      if (res.result && res.result.fulfillment && res.result.fulfillment && res.result.fulfillment.speech.length === 0 ) {
+      if (res.result && res.result.fulfillment && res.result.fulfillment &&
+        res.result.fulfillment.messages && res.result.fulfillment.speech.length === 0 ) {
         res.result.fulfillment.speech = 'Voor deze input hebben mijn programmeurs nog geen reactie gedefinieerd.';
       }
+      let message: string = res.result.fulfillment.messages[0].speech;
+      message = message.replace(/(\r\n|\n|\r)/gm, "<br/>");
       this.messages.push(
-        new Message(res.result.fulfillment.speech, 'bot', 'assets/images/bot.png', res.timestamp)
+        new Message(message, 'bot', 'assets/images/bot.png', res.timestamp)
       );
       this.playReplyMessage(res.result.fulfillment.speech);
     });
