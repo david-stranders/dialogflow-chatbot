@@ -51,7 +51,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
         new Message(res.result.fulfillment.speech, 'bot', 'assets/images/bot.png', res.timestamp)
       );
       this.playReplyMessage(res.result.fulfillment.speech);
-      if(res.result.fulfillment.speech === 'Oei, het lukt me nu niet om de agenda te openen. Ik probeer het nog een keer, een ogenblik nog...') {
+      if(res.result.fulfillment.speech === 'Oei, het lukt me nu niet om de agenda te openen. Ik probeer het nog een keer, een ogenblik nog') {
         setTimeout(()=> {
           this.sendMessage();
         }, 5000)
