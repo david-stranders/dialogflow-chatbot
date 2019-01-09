@@ -71,8 +71,8 @@ export class SpeechService {
 
   private setupListener() {
     this._speechRecognition.lang = 'nl-NL';
-    this._speechRecognition.interimResults = false; // We don't want partial results
-    this._speechRecognition.maxAlternatives = 1; // By now we are interested only on the most accurate alternative
+    this._speechRecognition.interimResults = false;
+    this._speechRecognition.maxAlternatives = 1;
 
     if (!this._speechRecognition.onstart) {
       this._speechRecognition.onspeechstart = (event) => { this.handleSpeechStart(event) };
@@ -94,8 +94,8 @@ export class SpeechService {
     if (!this._speechRecognition.nomatch) {
       this._speechRecognition.nomatch = (event) => { this.handleNoRecognitionAvaliable(event) };
     }
-
   }
+
   handleSpeechStart(event: any) {
     this._lastResult = null;
   }

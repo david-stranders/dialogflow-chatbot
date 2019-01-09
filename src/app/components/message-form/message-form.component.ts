@@ -45,13 +45,17 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
 
     this.dialogFlowService.getResponse(this.message).subscribe(res => {
       if (res.result && res.result.fulfillment && res.result.fulfillment && res.result.fulfillment.speech.length === 0 ) {
-        res.result.fulfillment.speech = 'Voor deze input hebben mijn programmeurs nog geen reactie gedefinieerd. (' +
-        res.result.action + ')';
+        res.result.fulfillment.speech = 'Voor deze input hebben mijn programmeurs nog geen reactie gedefinieerd.';
       }
       this.messages.push(
         new Message(res.result.fulfillment.speech, 'bot', 'assets/images/bot.png', res.timestamp)
       );
       this.playReplyMessage(res.result.fulfillment.speech);
+      if(res.result.fulfillment.speech === 'Oei, het lukt me nu niet om de agenda te openen. Ik probeer het nog een keer, een ogenblik nog...') {
+        setTimeout(()=> {
+          this.sendMessage();
+        }, 5000)
+      }
     });
     this.message = '';
   }
