@@ -48,7 +48,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
         res.result.fulfillment.messages && res.result.fulfillment.speech.length === 0 ) {
         res.result.fulfillment.speech = 'Voor deze input hebben mijn programmeurs nog geen reactie gedefinieerd.';
       }
-      let message: string = res.result.fulfillment.messages[0].speech;
+      let message: string = res.result.fulfillment.speech;
       message = message.replace(/(\r\n|\n|\r)/gm, "<br/>");
       this.messages.push(
         new Message(message, 'bot', 'assets/images/bot.png', res.timestamp)
