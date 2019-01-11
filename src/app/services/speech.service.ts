@@ -18,15 +18,15 @@ const { msSpeechRecognition }: AppWindow = <AppWindow>window;
 })
 export class SpeechService {
 
-  private _isListening: boolean;
+  private isListening: boolean;
   private _supportRecognition: boolean;
   private _supportSpeechUtterance: boolean;
-  private _speechRecognition: any;
-  private _messageToSpeak: any;
-  private _lastResult: RecognitionResult = null;
+  private speechRecognition: any;
+  private messageToSpeak: any;
+  private lastResult: RecognitionResult = null;
 
   public get IsListening(): boolean {
-    return this._isListening;
+    return this.isListening;
   }
 
   public get supportRecognition(): boolean {
@@ -42,62 +42,62 @@ export class SpeechService {
   private init(): void {
     this._supportRecognition = true;
     if (window['SpeechRecognition']) {
-      this._speechRecognition = new SpeechRecognition();
+      this.speechRecognition = new SpeechRecognition();
     } else if (window['webkitSpeechRecognition']) {
-      this._speechRecognition = new webkitSpeechRecognition();
+      this.speechRecognition = new webkitSpeechRecognition();
     } else if(window['msSpeechRecognition']){
-      this._speechRecognition = new msSpeechRecognition();
+      this.speechRecognition = new msSpeechRecognition();
     } else {
       this._supportRecognition = false;
     }
 
     if (window['speechSynthesis'] || window['SpeechSynthesisUtterance']) {
-      this._messageToSpeak =  new SpeechSynthesisUtterance();
+      this.messageToSpeak =  new SpeechSynthesisUtterance();
     } else {
       this._supportSpeechUtterance = false;
     }
   }
 
   private setupSpeechUtterance(message?: string) {
-    this._messageToSpeak.lang = 'nl-NL';
-    this._messageToSpeak.voiceURI = 'Google Nederlands';
-    this._messageToSpeak.volume = 1;
-    this._messageToSpeak.rate = 0.9;
-    this._messageToSpeak.pitch = 1.05;
+    this.messageToSpeak.lang = 'nl-NL';
+    this.messageToSpeak.voiceURI = 'Google Nederlands';
+    this.messageToSpeak.volume = 1;
+    this.messageToSpeak.rate = 0.9;
+    this.messageToSpeak.pitch = 1.05;
     if (message) {
-      this._messageToSpeak.text = message;
+      this.messageToSpeak.text = message;
     }
   }
 
   private setupListener() {
-    this._speechRecognition.lang = 'nl-NL';
-    this._speechRecognition.interimResults = false;
-    this._speechRecognition.maxAlternatives = 1;
+    this.speechRecognition.lang = 'nl-NL';
+    this.speechRecognition.interimResults = false;
+    this.speechRecognition.maxAlternatives = 1;
 
-    if (!this._speechRecognition.onstart) {
-      this._speechRecognition.onspeechstart = (event) => { this.handleSpeechStart(event) };
+    if (!this.speechRecognition.onstart) {
+      this.speechRecognition.onspeechstart = (event) => { this.handleSpeechStart(event) };
     }
 
-    if (!this._speechRecognition.onresult) {
-      this._speechRecognition.onresult = (event) => { this.handleResultevent(event) };
+    if (!this.speechRecognition.onresult) {
+      this.speechRecognition.onresult = (event) => { this.handleResultevent(event) };
     }
 
-    if (!this._speechRecognition.onend) {
-      this._speechRecognition.onend = (event) => { this.handleEndEvent(event) };
+    if (!this.speechRecognition.onend) {
+      this.speechRecognition.onend = (event) => { this.handleEndEvent(event) };
     }
 
-    if (!this._speechRecognition.onspeechend) {
-      this._speechRecognition.onspeechend = (event) => {
+    if (!this.speechRecognition.onspeechend) {
+      this.speechRecognition.onspeechend = (event) => {
         this.handleSpeechEndEvent(event) };
     }
 
-    if (!this._speechRecognition.nomatch) {
-      this._speechRecognition.nomatch = (event) => { this.handleNoRecognitionAvaliable(event) };
+    if (!this.speechRecognition.nomatch) {
+      this.speechRecognition.nomatch = (event) => { this.handleNoRecognitionAvaliable(event) };
     }
   }
 
   handleSpeechStart(event: any) {
-    this._lastResult = null;
+    this.lastResult = null;
   }
 
   handleNoRecognitionAvaliable(event: any) {
@@ -106,38 +106,47 @@ export class SpeechService {
 
   private handleResultevent(event: any) {
     const result = event.results[0][0];
-    this._lastResult = { confidence: result.confidence, transcript: result.transcript };
+    this.lastResult = { confidence: result.confidence, transcript: result.transcript };
     this.zone.run(() => {
-      this.resultEmitter.emit(this._lastResult);
+      this.resultEmitter.emit(this.lastResult);
     })
   }
 
   private handleEndEvent(event: any) {
-    this._isListening = false;
+    this.isListening = false;
     this.zone.run(() => {
       this.resultEmitter.emit(null);
     });
-    this._lastResult = null;
+    this.lastResult = null;
   }
 
   private handleSpeechEndEvent(event: any) {
-    this._isListening = false;
+    this.isListening = false;
   }
 
   public requestListening() {
-    this._isListening = true;
+    this.isListening = true;
     this.setupListener();
-    this._speechRecognition.start();
+    this.speechRecognition.start();
   }
 
   public stopListening() {
-    this._isListening = false;
-    this._speechRecognition.stop();
+    this.isListening = false;
+    this.speechRecognition.stop();
   }
 
   public requestSpeak(message: string) {
     this.setupSpeechUtterance(message);
-    window.speechSynthesis.speak(this._messageToSpeak);
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(this.messageToSpeak);
+    let interval = setInterval( () => {
+      if (!speechSynthesis.speaking) {
+        clearInterval(interval);
+      } else {
+        speechSynthesis.resume();
+      }
+    }, 14000)
   }
 }
 
