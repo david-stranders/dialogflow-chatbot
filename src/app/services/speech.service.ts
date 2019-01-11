@@ -63,7 +63,7 @@ export class SpeechService {
     this._messageToSpeak.voiceURI = 'Google Nederlands';
     this._messageToSpeak.volume = 1;
     this._messageToSpeak.rate = 0.9;
-    this._messageToSpeak.pitch = 1;
+    this._messageToSpeak.pitch = 1.05;
     if (message) {
       this._messageToSpeak.text = message;
     }
