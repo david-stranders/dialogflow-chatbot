@@ -62,7 +62,7 @@ export class SpeechService {
     this._messageToSpeak.lang = 'nl-NL';
     this._messageToSpeak.voiceURI = 'Google Nederlands';
     this._messageToSpeak.volume = 1;
-    this._messageToSpeak.rate = 0.8;
+    this._messageToSpeak.rate = 0.9;
     this._messageToSpeak.pitch = 1;
     if (message) {
       this._messageToSpeak.text = message;
