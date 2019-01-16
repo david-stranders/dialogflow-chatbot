@@ -135,6 +135,17 @@ export class SpeechService {
     this.speechRecognition.stop();
   }
 
+  public cancelSpeech() {
+    const speechSynthesis = window.speechSynthesis;
+    speechSynthesis.cancel();
+  }
+
+  public isTalking() {
+    const speechSynthesis = window.speechSynthesis;
+    return speechSynthesis.speaking
+
+  }
+
   public requestSpeak(message: string) {
     this.setupSpeechUtterance(message);
     const speechSynthesis = window.speechSynthesis;

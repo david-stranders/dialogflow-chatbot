@@ -51,7 +51,7 @@ export class MessageFormComponent implements OnInit, AfterViewInit {
       let message: string = res.result.fulfillment.speech;
       message = message.replace(/(\r\n|\n|\r)/gm, "<br/>");
       this.messages.push(
-        new Message(message, 'bot', 'assets/images/bot.png', res.timestamp)
+        new Message(message, 'bot', 'assets/images/chatbot-talking.gif', res.timestamp)
       );
       this.playReplyMessage(res.result.fulfillment.speech);
     });

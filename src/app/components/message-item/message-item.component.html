@@ -1,7 +1,7 @@
 <div class="message" [ngClass]="{ 'from': message.sentBy === 'bot', 'to':   message.sentBy === 'user' }">
   <tr *ngIf="message.sentBy === 'bot'">
     <td class="avatar-box">
-    <img [src]="message.avatar" class="avatar"/>
+    <img (click)="cancelSpeech()" [src]="imageSource" class="avatar"/>
     <span>{{message.timestamp | date : 'HH:mm:ss' }}</span>
     </td>
     <td class="text-box"> <span [innerHTML]="message.content"></span></td>

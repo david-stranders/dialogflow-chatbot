@@ -12,7 +12,7 @@ export class AppComponent {
 
   constructor(){
     this.messages = [
-      new Message('Welkom, stel een vraag', 'bot', 'assets/images/bot.png', new Date())
+      new Message('Welkom, stel een vraag', 'bot', 'assets/images/chatbot-talking.gif', new Date())
     ];
   }
 }

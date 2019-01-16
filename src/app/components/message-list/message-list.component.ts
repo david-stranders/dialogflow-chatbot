@@ -1,6 +1,7 @@
 import {Component, Input, ViewChild, ElementRef, ViewChildren, QueryList, AfterViewInit} from '@angular/core';
 import {Message} from "../../model/message";
 import {MessageItemComponent} from "../message-item/message-item.component";
+import {SpeechService} from "../../services/speech.service";
 
 @Component({
   selector: 'message-list',
@@ -9,6 +10,9 @@ import {MessageItemComponent} from "../message-item/message-item.component";
 })
 export class MessageListComponent implements AfterViewInit{
 
+  imageTalking = 'assets/images/chatbot-talking.gif';
+  imageNotTalking = 'assets/images/chatbot-not-talking.gif';
+
   @Input('messages')
   messages : Message[];
   viewportHeight: number;
@@ -16,12 +20,16 @@ export class MessageListComponent implements AfterViewInit{
   @ViewChild('chatlist', { read: ElementRef }) chatList: ElementRef;
   @ViewChildren(MessageItemComponent, { read: ElementRef }) chatItems: QueryList<MessageItemComponent>;
 
-  constructor() { }
+  constructor(readonly speechService: SpeechService) { }
 
   ngAfterViewInit() {
     this.chatItems.changes.subscribe(elements => {
       this.scrollToBottom();
     });
+  }
+
+  getImageSource(): string {
+    return this.speechService.isTalking() ? this.imageTalking : this.imageNotTalking;
   }
 
   private scrollToBottom(): void {
